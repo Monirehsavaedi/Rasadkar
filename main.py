@@ -11,6 +11,9 @@ load_dotenv()
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 
+# اضافه شدن این خط برای جلوگیری از عبور ترافیک سایت‌های ایرانی از فیلترشکن
+os.environ['NO_PROXY'] = 'jobvision.ir,jobinja.ir,localhost,127.0.0.1'
+
 def load_config():
     try:
         with open("config.json", "r", encoding="utf-8") as f:
@@ -21,6 +24,7 @@ def load_config():
 def send_telegram_message(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     payload = {"chat_id": TELEGRAM_CHAT_ID, "text": message, "parse_mode": "Markdown"}
+    # این پراکسی فقط برای همین ریکوئست (تلگرام) اعمال می‌شود
     proxies = {"http": "http://127.0.0.1:10808", "https": "http://127.0.0.1:10808"}
     try:
         requests.post(url, json=payload, proxies=proxies, timeout=15)
