@@ -1,0 +1,17 @@
+name: Rasadkar CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-docker-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Test Docker Build
+        run: docker build -t rasadkar-bot:latest .
